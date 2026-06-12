@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio-svc-mon
+  namespace: minio
+spec:
+  endpoints:
+    - interval: 30s
+      path: /minio/v2/metrics/cluster
+      scheme: http
+      targetPort: 9000
+  jobLabel: v1.min.io/tenant
+  namespaceSelector:
+    matchNames:
+      - minio
+  selector:
+    matchLabels:
+      v1.min.io/tenant: myminio
